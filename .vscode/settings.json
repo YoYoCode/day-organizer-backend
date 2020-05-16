@@ -1,0 +1,28 @@
+{
+  "cSpell.words": [
+    "autorestart",
+    "dayjs",
+    "middlewares",
+    "minlength",
+    "parens",
+    "readonly"
+  ],
+
+  "files.autoSave": "onFocusChange",
+  "window.zoomLevel": 1,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.statusBar.visible": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "eslint.alwaysShowStatus": true,
+  "eslint.options": {
+    "extensions": [".html", ".js", ".vue", ".jsx"]
+  },
+  "eslint.validate": ["javascript"],
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true
+}
