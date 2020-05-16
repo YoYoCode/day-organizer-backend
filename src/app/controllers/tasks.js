@@ -33,8 +33,11 @@ const createTask = async (req, res) => {
  */
 const getTask = async (req, res) => {
   try {
-    const { status = 'ACTIVE' } = req.query;
-    const tasks = await Query.get(Task, { userId: req.user._id });
+    const { status = statuses.ACTIVE } = req.query;
+    if (!_.values(statuses).includes(status)) {
+      throw 'Invalid Status';
+    }
+    const tasks = await Query.get(Task, { userId: req.user._id, status });
 
     if (!tasks) {
       throw 'Task not found';
