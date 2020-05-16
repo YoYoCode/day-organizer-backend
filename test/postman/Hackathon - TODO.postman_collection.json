@@ -1,0 +1,418 @@
+{
+	"info": {
+		"_postman_id": "64a26b4a-3f99-4f28-9f7f-66b04847b5cd",
+		"name": "Hackathon - TODO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "39ee89e4-5500-4156-9cfa-e7089de29525",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.environment.set(\"AUTH_TOKEN\", response.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"hackathon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/users",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "820952be-048a-4405-9876-313483c16499",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"pm.environment.set(\"AUTH_TOKEN\", response.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"hackathon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL}}/auth/login",
+							"host": [
+								"{{DOMAIN_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "Get All Tasks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks?id=5ec014f91b931451788829db",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5ec014f91b931451788829db"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Task\",\n    \"label\": \"5ec014eb1b931451788829da\",\n    \"reminder\": \"2020-05-16T16:19:41.889Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task By Id",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Task Updated\",\n    \"label\": \"5ec01d87f5b310535097b648\",\n    \"reminder\": \"2020-05-16T16:19:41.889Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks/5ec014f91b931451788829db",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks",
+								"5ec014f91b931451788829db"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Label Updated\",\n    \"colorCode\": \"#0778\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks/5ec014f91b931451788829db",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks",
+								"5ec014f91b931451788829db"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "labels",
+			"item": [
+				{
+					"name": "Get All Labels",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/labels",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"labels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Label By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/labels?id=5ec01107af682a508df9abf7",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"labels"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5ec01107af682a508df9abf7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Label",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Label 2\",\n    \"colorCode\": \"#0777\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/labels",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"labels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Label By Id",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"colorCode\": \"#0779\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/labels/5ec01107af682a508df9abf7",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"labels",
+								"5ec01107af682a508df9abf7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Label By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Label Updated\",\n    \"colorCode\": \"#0778\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/labels/5ec01107af682a508df9abf7",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"labels",
+								"5ec01107af682a508df9abf7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "health-check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DOMAIN_URL}}/health",
+					"host": [
+						"{{DOMAIN_URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Endpoints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DOMAIN_URL}}/",
+					"host": [
+						"{{DOMAIN_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
