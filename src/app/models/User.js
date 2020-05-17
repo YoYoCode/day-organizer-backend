@@ -22,8 +22,7 @@ const UserSchema = new mongoose.Schema(
     tokens: [String],
     userPhoto: {
       type: String,
-      trim: true,
-      unique: true
+      trim: true
     },
     deleteFlag: {
       type: Boolean,
