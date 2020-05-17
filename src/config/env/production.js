@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  DB_URL: `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}`,
+  DB_URL: process.env.MONGO_DB_URL,
   DEFAULT_DB: process.env.DEFAULT_DB,
   api: {
     bodySizeLimit: process.env.API_BODY_SIZE_LIMIT,
