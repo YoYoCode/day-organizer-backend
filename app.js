@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+
 const config = require('./src/config');
 const routes = require('./src/app/routes');
 const { errorHandler } = require('./src/app/middlewares/errors');
@@ -28,6 +29,7 @@ app.use(express.json(bodyParserJsonConfig()));
 app.use(express.urlencoded(bodyParserUrlencodedConfig()));
 
 app.use(morgan('combined', { stream: logger.stream }));
+
 routes.init(app);
 
 errorHandler(app);

@@ -14,6 +14,7 @@ const loginRouter = require('./controllers/login');
 const userRouter = require('./controllers/users');
 const taskRouter = require('./controllers/tasks');
 const labelRouter = require('./controllers/labels');
+const pusherRouter = require('./controllers/pusher');
 
 /**
  * Adding version
@@ -21,6 +22,7 @@ const labelRouter = require('./controllers/labels');
 const versioning = app => {
   const router = require('express').Router();
   router.use('/users', userRouter);
+  router.use('/', pusherRouter);
   router.use(authenticate);
   router.use('/tasks', taskRouter);
   router.use('/labels', labelRouter);

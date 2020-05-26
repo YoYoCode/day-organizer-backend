@@ -6,6 +6,7 @@ const app = require('./app.js');
 const logger = require('./src/logger/index.js');
 const config = require('./src/config/index.js');
 const database = require('./src/db/index.js');
+const services = require('./src/services/index.js');
 
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,8 @@ function listen() {
 
 async function start() {
   await database(config).connect();
+  await services(config);
+
   listen();
 }
 
