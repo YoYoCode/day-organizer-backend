@@ -20,18 +20,22 @@ const bodyParserUrlencodedConfig = () => ({
   limit: config.api.bodySizeLimit || DEFAULT_BODY_SIZE_LIMIT
 });
 
-const app = express();
+const init = services => {
+  const app = express();
 
-app.use(cors());
+  app.use(cors());
 
-// Client must send "Content-Type: application/json" header
-app.use(express.json(bodyParserJsonConfig()));
-app.use(express.urlencoded(bodyParserUrlencodedConfig()));
+  // Client must send "Content-Type: application/json" header
+  app.use(express.json(bodyParserJsonConfig()));
+  app.use(express.urlencoded(bodyParserUrlencodedConfig()));
 
-app.use(morgan('combined', { stream: logger.stream }));
+  app.use(morgan('combined', { stream: logger.stream }));
 
-routes.init(app);
+  routes.init(app, services);
 
-errorHandler(app);
+  errorHandler(app);
 
-module.exports = app;
+  return app;
+};
+
+module.exports = init;

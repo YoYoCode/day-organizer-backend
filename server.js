@@ -2,15 +2,15 @@
 
 require('dotenv').config();
 
-const app = require('./app.js');
+const apiServer = require('./app.js');
 const logger = require('./src/logger/index.js');
 const config = require('./src/config/index.js');
 const database = require('./src/db/index.js');
-const services = require('./src/services/index.js');
+const loadServices = require('./src/services/index.js');
 
 const port = process.env.PORT || 3000;
 
-function listen() {
+function listen(app) {
   if (app.get('env') === 'test') return;
   app.listen(port);
   logger.info('ToDo app started on port ' + port);
@@ -18,9 +18,9 @@ function listen() {
 
 async function start() {
   await database(config).connect();
-  await services(config);
-
-  listen();
+  const services = await loadServices(config);
+  const app = apiServer(services);
+  listen(app);
 }
 
 start();

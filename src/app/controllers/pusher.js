@@ -4,30 +4,33 @@
  * Module dependencies.
  */
 
-const notifier = require('../../services/push-notifications.js');
-const pusherRouter = require('express').Router();
+const router = require('express').Router();
 
 /**
  * Web Push Notifications
  */
-const subscription = async (req, res) => {
-  try {
-    const subscription = req.body.subscription;
-    console.log(subscription);
-    res.status(201).json({});
+// const subscription =
 
-    const payload = JSON.stringify({
-      title: 'Welcome to TODOLIST',
-      name: `Hello!! ${req.body.user.data.user.username}`
-    });
-    console.log(payload);
-    notifier.pusher().sendNotification(subscription, payload);
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(JSON.stringify(error, ['stack'], 4));
-  }
+const pusherRouter = services => {
+  const { notifier } = services;
+  router.post('/subscribe', async (req, res) => {
+    try {
+      const subscription = req.body.subscription;
+      console.log(subscription);
+      res.status(201).json({});
+
+      const payload = JSON.stringify({
+        title: 'Welcome to TODOLIST',
+        name: `Hello!! ${req.body.user.data.user.username}`
+      });
+      console.log(payload);
+      notifier.sendNotification(subscription, payload);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(JSON.stringify(error, ['stack'], 4));
+    }
+  });
+  return router;
 };
-
-pusherRouter.post('/subscribe', subscription);
 
 module.exports = pusherRouter;

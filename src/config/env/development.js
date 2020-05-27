@@ -10,6 +10,11 @@ module.exports = {
     PRIVATE_VAPID_KEY: process.env.PRIVATE_VAPID_KEY,
     MAIL_TO: 'mailto:codingknights@gmail.com'
   },
+  REDIS: {
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PORT: process.env.REDIS_PORT,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD
+  },
   api: {
     bodySizeLimit: process.env.API_BODY_SIZE_LIMIT,
     parameterLimit: process.env.API_PARAMETER_LIMIT,
