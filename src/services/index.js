@@ -1,12 +1,29 @@
-const webPusher = require('./push-notifications.js');
-// const redisClient = require('./redis.js');
+const webPusherClient = require('./pusher/pusher-client.js');
+const redisClient = require('./redis/redis-client');
 
-module.exports = async config => {
+const webPusherActions = require('./pusher/pusher-actions.js');
+const redisActions = require('./redis/redis-actions.js');
+
+const initServices = async config => {
   try {
-    await webPusher.configure(config);
-    // await redisClient.configure(config);
+    /**
+     * * Connection Established
+     */
+    const pusher = await webPusherClient(config);
+    const { client } = await redisClient(config);
+
+    /**
+     * * Loading Actions
+     */
+
+    const notifier = webPusherActions(pusher);
+    const redis = redisActions(client);
+
+    return { notifier, redis };
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
+module.exports = initServices;

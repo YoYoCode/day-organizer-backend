@@ -19,22 +19,22 @@ const pusherRouter = require('./controllers/pusher');
 /**
  * Adding version
  */
-const versioning = app => {
+const versioning = services => {
   const router = require('express').Router();
   router.use('/users', userRouter);
-  router.use('/', pusherRouter);
+  router.use('/', pusherRouter(services));
   router.use(authenticate);
   router.use('/tasks', taskRouter);
   router.use('/labels', labelRouter);
   return router;
 };
 
-exports.init = app => {
+exports.init = (app, services) => {
   app.get('/health', healthCheck);
   app.get('/ping', (_, res) => res.send('pong'));
   app.get('/', (req, res) => {
     res.json(listEndpoints(app));
   });
   app.use('/auth', loginRouter);
-  app.use('/api/v1', versioning(app));
+  app.use('/api/v1', versioning(services));
 };

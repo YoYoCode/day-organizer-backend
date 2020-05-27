@@ -1,42 +1,14 @@
 const { promisify } = require('util');
-const redis = require('redis');
 
-const handleExpiredEvents = (_channel, message) => {
-  console.log(message);
-};
-
-const configure = config => {
-  const subscriber = redis.createClient();
-
-  /**
-   * * Configure the redis client to emit events on expiry
-   */
-
-  subscriber.config('set', 'notify-keyspace-events', 'Ex');
-
-  /**
-   * * Subscribe to expired events
-   */
-  subscriber.subscribe('__keyevent@0__:expired');
-
-  subscriber.on('message', handleExpiredEvents);
-
-  console.log('Redis Configured..');
-};
-
-const actions = () => {
-  const client = redis.createClient();
-
-  const setEx = promisify(client.setx).bind(client);
-  const get = promisify(client.get).bind(client);
-  const del = promisify(client.del).bind(client);
-
+const actions = client => {
   const redisSet = async (key, value, expiry = null) => {
+    const setEx = promisify(client.setex).bind(client);
     console.debug(`setting redis for key ${key} with values ${value}`);
     await setEx(key, expiry, value);
   };
 
   const redisGet = async key => {
+    const get = promisify(client.get).bind(client);
     console.debug(`getting redis value for key ${key}`);
     const value = await get(key);
     console.debug(`redis value for key ${key} is ${value}`);
@@ -44,6 +16,7 @@ const actions = () => {
   };
 
   const redisDel = async key => {
+    const del = promisify(client.del).bind(client);
     console.debug(`Deleting key ${key} from redis`);
     await del(key);
   };
@@ -79,7 +52,4 @@ const actions = () => {
   };
 };
 
-module.exports = {
-  configure,
-  actions
-};
+module.exports = actions;
