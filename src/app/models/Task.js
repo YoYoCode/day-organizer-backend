@@ -30,10 +30,6 @@ const taskSchema = new mongoose.Schema(
     deleteFlag: {
       type: Boolean,
       default: false
-    },
-    overdue: {
-      type: Boolean,
-      default: false
     }
   },
   { timestamps: true }
