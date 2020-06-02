@@ -22,16 +22,13 @@ const taskSchema = new mongoose.Schema(
       ref: 'Label'
     },
     priority: {
-      type: String
+      type: String,
+      default: 'LOW'
     },
     reminder: {
       type: Date
     },
     deleteFlag: {
-      type: Boolean,
-      default: false
-    },
-    overdue: {
       type: Boolean,
       default: false
     }
