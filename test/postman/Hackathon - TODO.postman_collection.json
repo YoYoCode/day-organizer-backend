@@ -94,7 +94,7 @@
 			"name": "tasks",
 			"item": [
 				{
-					"name": "Get All Tasks",
+					"name": "Get All Tasks By Label",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -105,7 +105,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks?id=5ec014f91b931451788829db",
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks?label=5ed671b1a2cec3f64c577b71",
 							"host": [
 								"{{DOMAIN_URL_WITH_VERSION}}"
 							],
@@ -114,8 +114,97 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "5ec014f91b931451788829db"
+									"key": "label",
+									"value": "5ed671b1a2cec3f64c577b71"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks [Default Status ACTIVE]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks By Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks?status=COMPLETED",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "COMPLETED"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks By Priority",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN_URL_WITH_VERSION}}/tasks?priority=LOW&status=ACTIVE&label=5ed671b1a2cec3f64c577b71",
+							"host": [
+								"{{DOMAIN_URL_WITH_VERSION}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "priority",
+									"value": "LOW"
+								},
+								{
+									"key": "status",
+									"value": "ACTIVE"
+								},
+								{
+									"key": "label",
+									"value": "5ed671b1a2cec3f64c577b71"
 								}
 							]
 						}
@@ -135,7 +224,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test Task\",\n    \"label\": \"5ec014eb1b931451788829da\",\n    \"reminder\": \"2020-05-16T16:19:41.889Z\"\n}",
+							"raw": "{\n    \"name\": \"Test Task 2\",\n    \"label\": \"5ed671b1a2cec3f64c577b71\",\n    \"reminder\": \"2020-05-16T16:19:41.889Z\",\n    \"priority\":\"HIGH\",\n    \"status\": \"COMPLETED\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -291,7 +380,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test Label 2\",\n    \"colorCode\": \"#0777\"\n}",
+							"raw": "{\n    \"name\": \"Test Label 5\",\n    \"colorCode\": \"#0777\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

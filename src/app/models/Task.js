@@ -22,7 +22,8 @@ const taskSchema = new mongoose.Schema(
       ref: 'Label'
     },
     priority: {
-      type: String
+      type: String,
+      default: 'LOW'
     },
     reminder: {
       type: Date

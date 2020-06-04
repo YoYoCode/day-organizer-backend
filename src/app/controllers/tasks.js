@@ -15,6 +15,12 @@ const statuses = {
   ARCHIVED: 'ARCHIVED',
   COMPLETED: 'COMPLETED'
 };
+
+const priorities = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+};
 /**
  * Create a task
  */
@@ -28,19 +34,30 @@ const createTask = async (req, res) => {
   }
 };
 
-/**
- * Get task details
- */
-const getTask = async (req, res) => {
-  try {
-    const { status = statuses.ACTIVE } = req.query;
-    if (!_.values(statuses).includes(status)) {
-      throw 'Invalid Status';
-    }
-    const tasks = await Query.get(Task, { userId: req.user._id, status });
+function getWhereClause(query) {
+  const { status = statuses.ACTIVE, priority } = query;
+  if (!_.values(statuses).includes(status)) {
+    throw 'Invalid Status';
+  }
 
+  if (priority && !_.values(priorities).includes(priority)) {
+    throw 'Invalid Priority';
+  }
+
+  const cleanObject = _.pickBy(query, value => !_.isUndefined(value));
+
+  return { ...cleanObject, ...{ status } };
+}
+
+/**
+ * Get tasks details
+ */
+const getTasks = async (req, res) => {
+  try {
+    const whereClause = getWhereClause(req.query);
+    const tasks = await Query.get(Task, { userId: req.user._id, ...whereClause });
     if (!tasks) {
-      throw 'Task not found';
+      throw 'Tasks not found';
     }
     res.send(tasks);
   } catch (err) {
@@ -92,7 +109,7 @@ const deleteTask = async (req, res) => {
 
 const pick = body => _.pick(body, ['name', 'status', 'label', 'priority', 'reminder']);
 
-taskRouter.get('/', getTask);
+taskRouter.get('/', getTasks);
 taskRouter.post('/', createTask);
 taskRouter.patch('/:id', updateTask);
 taskRouter.delete('/:id', deleteTask);
