@@ -7,6 +7,7 @@
 const _ = require('lodash');
 const Label = require('../models/Label.js');
 const Query = require('../helpers/query');
+const Dashboard = require('../helpers/dashboard');
 const labelRouter = require('express').Router();
 const logger = require('../../logger');
 
@@ -15,8 +16,12 @@ const logger = require('../../logger');
  */
 const createLabel = async (req, res) => {
   try {
-    const label = await Query.post(Label, { userId: req.user._id, ...req.body });
-    res.send(label);
+    await Query.post(Label, { userId: req.user._id, ...req.body });
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);
@@ -38,7 +43,11 @@ const getLabel = async (req, res) => {
     if (!labels) {
       throw 'Label not found';
     }
-    res.send(labels);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(404).json(err);
@@ -58,7 +67,11 @@ const updateLabel = async (req, res) => {
     if (!label) {
       throw 'Label not found';
     }
-    res.send(label);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);
@@ -82,7 +95,11 @@ const deleteLabel = async (req, res) => {
     if (!label) {
       throw 'Label not found';
     }
-    res.send(label);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);
