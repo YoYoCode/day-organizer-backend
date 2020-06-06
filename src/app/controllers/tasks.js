@@ -7,6 +7,7 @@
 const _ = require('lodash');
 const Task = require('../models/Task.js');
 const Query = require('../helpers/query');
+const Dashboard = require('../helpers/dashboard');
 const taskRouter = require('express').Router();
 const logger = require('../../logger');
 
@@ -26,8 +27,12 @@ const priorities = {
  */
 const createTask = async (req, res) => {
   try {
-    const task = await Query.post(Task, { userId: req.user._id, ...req.body });
-    res.send(task);
+    await Query.post(Task, { userId: req.user._id, ...req.body });
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);
@@ -59,7 +64,11 @@ const getTasks = async (req, res) => {
     if (!tasks) {
       throw 'Tasks not found';
     }
-    res.send(tasks);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(404).json(err);
@@ -79,7 +88,11 @@ const updateTask = async (req, res) => {
     if (!task) {
       throw 'Task not found';
     }
-    res.send(task);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);
@@ -100,7 +113,11 @@ const deleteTask = async (req, res) => {
     if (!task) {
       throw 'Task not found';
     }
-    res.send(task);
+    const dashboardResponse = await Dashboard(req);
+    if (!dashboardResponse) {
+      throw 'Internal Server Error';
+    }
+    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(400).json(err);

@@ -44,6 +44,7 @@
     "express-list-endpoints": "^4.0.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
+    "moment": "^2.26.0",
     "mongoose": "~5.5.3",
     "morgan": "~1.9.1",
     "pm2": "^4.4.0",
