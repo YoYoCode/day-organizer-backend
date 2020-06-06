@@ -18,11 +18,19 @@ const pusherRouter = services => {
       const subscription = req.body.subscription;
       console.log(subscription);
       res.status(201).json({});
+      let payload = '';
+      if (req.body.user) {
+        payload = JSON.stringify({
+          title: 'Welcome to DOP',
+          name: `Hello!! ${req.body.user.data.user.username}`
+        });
+      } else {
+        payload = JSON.stringify({
+          title: 'Have a Productive Day',
+          name: `Added a Task Successfully`
+        });
+      }
 
-      const payload = JSON.stringify({
-        title: 'Welcome to TODOLIST',
-        name: `Hello!! ${req.body.user.data.user.username}`
-      });
       console.log(payload);
       notifier.sendNotification(subscription, payload);
     } catch (error) {
