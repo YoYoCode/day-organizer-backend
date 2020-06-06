@@ -64,11 +64,15 @@ const getTasks = async (req, res) => {
     if (!tasks) {
       throw 'Tasks not found';
     }
-    const dashboardResponse = await Dashboard(req);
-    if (!dashboardResponse) {
-      throw 'Internal Server Error';
+    if (req.query) {
+      res.send(tasks);
+    } else {
+      const dashboardResponse = await Dashboard(req);
+      if (!dashboardResponse) {
+        throw 'Internal Server Error';
+      }
+      res.send(dashboardResponse);
     }
-    res.send(dashboardResponse);
   } catch (err) {
     logger.error(err.stack);
     res.status(404).json(err);
