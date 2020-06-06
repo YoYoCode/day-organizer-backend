@@ -59,12 +59,12 @@ function getWhereClause(query) {
  */
 const getTasks = async (req, res) => {
   try {
-    const whereClause = getWhereClause(req.query);
-    const tasks = await Query.get(Task, { userId: req.user._id, ...whereClause });
-    if (!tasks) {
-      throw 'Tasks not found';
-    }
-    if (req.query) {
+    if (!_.isEmpty(req.query)) {
+      const whereClause = getWhereClause(req.query);
+      const tasks = await Query.get(Task, { userId: req.user._id, ...whereClause });
+      if (!tasks) {
+        throw 'Tasks not found';
+      }
       res.send(tasks);
     } else {
       const dashboardResponse = await Dashboard(req);
