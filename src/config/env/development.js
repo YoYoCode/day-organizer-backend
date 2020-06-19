@@ -4,7 +4,7 @@
 
 module.exports = {
   DB_URL: 'mongodb://localhost',
-  DEFAULT_DB: process.env.DEFAULT_DB,
+  DEFAULT_DB: 'HACKATHON_TODO',
   VAPID_KEYS: {
     PUBLIC_VAPID_KEY: process.env.PUBLIC_VAPID_KEY,
     PRIVATE_VAPID_KEY: process.env.PRIVATE_VAPID_KEY,

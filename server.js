@@ -6,9 +6,9 @@ const apiServer = require('./app.js');
 const logger = require('./src/logger/index.js');
 const config = require('./src/config/index.js');
 const database = require('./src/db/index.js');
-const loadServices = require('./src/services/index.js');
+// const loadServices = require('./src/services/index.js');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8005;
 
 function listen(app) {
   if (app.get('env') === 'test') return;
@@ -18,8 +18,8 @@ function listen(app) {
 
 async function start() {
   await database(config).connect();
-  const services = await loadServices(config);
-  const app = apiServer(services);
+  // const services = await loadServices(config);
+  const app = apiServer();
   listen(app);
 }
 

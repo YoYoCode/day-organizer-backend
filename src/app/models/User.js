@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema(
 UserSchema.methods = {
   // Generating jwt after creating a user and after login
   async generateAuthToken() {
-    const token = jwt.sign({ _id: this._id.toHexString(), username: this.username }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ _id: this._id.toHexString(), username: this.username }, 'process.env.JWT_SECRET', {
       expiresIn: '30d'
     });
 
@@ -54,7 +54,7 @@ UserSchema.methods = {
 
 UserSchema.statics = {
   async findByToken(token) {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, 'process.env.JWT_SECRET');
     const user = await this.findOne({
       _id: decoded._id
     }).populate('tenant');
